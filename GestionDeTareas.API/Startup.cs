@@ -1,4 +1,8 @@
-﻿namespace GestionDeTareas.API
+﻿using GestionDeTareas.API.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.SwaggerUI;
+
+namespace GestionDeTareas.API
 {
     public class Startup
     {
@@ -11,10 +15,14 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddControllers();            
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            services.AddDbContext<GestorContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -22,12 +30,18 @@
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("swagger/v1/swagger.json", "Gestor Project v1");
+                    c.RoutePrefix = "api/docs";
+                });
             }            
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
