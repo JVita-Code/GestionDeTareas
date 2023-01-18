@@ -1,6 +1,7 @@
 ﻿using GestionDeTareas.API.Core.Interfaces;
 using GestionDeTareas.API.Core.Models;
 using GestionDeTareas.API.Core.Models.DTOs.Activity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -21,7 +22,7 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpPost]
-    //[Authorize(Roles = "Administrator")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
