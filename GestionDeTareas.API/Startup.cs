@@ -6,6 +6,11 @@ using GestionDeTareas.API.Repositories.Interfaces;
 using GestionDeTareas.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace GestionDeTareas.API
 {
@@ -32,9 +37,52 @@ namespace GestionDeTareas.API
             //Business-Services
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
 
-            services.AddControllers();            
+            services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<GestorContext>()
+                    .AddDefaultTokenProviders();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });                
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["KeyJwt"])),
+                    ClockSkew = TimeSpan.Zero
+                });
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
