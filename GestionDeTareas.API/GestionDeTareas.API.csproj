@@ -22,13 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Business\" />
-    <Folder Include="Core\Models\" />
-    <Folder Include="Core\Interfaces\" />
-    <Folder Include="Core\Mapper\" />
+    <Folder Include="Core\Models\Enums\" />
     <Folder Include="DataAccess\SeedsData\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Repositories\Interfaces\" />
   </ItemGroup>
 
 </Project>
