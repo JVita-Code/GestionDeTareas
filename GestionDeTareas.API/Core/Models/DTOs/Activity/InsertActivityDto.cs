@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GestionDeTareas.API.Core.Models.DTOs.Activity
 {
-    public class InsertActivityDto : BaseDto
+    public class InsertActivityDto
     {
         [Required(ErrorMessage = "Title is required")]
         [StringLength(50, ErrorMessage = "Description cannot be longer than 500 characters")]
@@ -15,7 +15,7 @@ namespace GestionDeTareas.API.Core.Models.DTOs.Activity
 
         [DefaultValue(false)]
         public bool IsCompleted { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? CompletedAt { get; set; } = DateTime.Now;
+        //[DataType(DataType.Date)]
+        //public DateTime? CompletedAt { get; set; } = DateTime.Now;
     }
 }

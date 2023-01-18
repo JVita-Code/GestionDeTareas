@@ -7,8 +7,7 @@ namespace GestionDeTareas.API.Entities
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public DateTime? ModifiedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; } = DateTime.UtcNow;
         [Required]
         [DefaultValue(false)]
         public bool IsDeleted { get; set; } 

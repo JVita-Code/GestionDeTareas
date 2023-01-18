@@ -7,9 +7,9 @@ namespace GestionDeTareas.API.Core.Models.DTOs
     {
         //[Key]
         //public int? Id { get; set; }
-        [Required]
+        //[Required]
         public DateTime? ModifiedAt { get; set; }
-        [Required]
+        //[Required]
         [DefaultValue(false)]
         public bool IsDeleted { get; set; }
         public DateTime? DeletedAt { get; set; }

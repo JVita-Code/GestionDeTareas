@@ -35,8 +35,6 @@ namespace GestionDeTareas.API
             services.AddControllers();            
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-
-            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,10 +44,13 @@ namespace GestionDeTareas.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("swagger/v1/swagger.json", "Gestor Project v1");
-                    c.RoutePrefix = "api/docs";
+                    c.SwaggerEndpoint("./v1/swagger.json", "Gestor Project v1");
+                    //c.RoutePrefix = "api/docs";
+                    
                 });
-            }            
+            }
+
+            app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
 

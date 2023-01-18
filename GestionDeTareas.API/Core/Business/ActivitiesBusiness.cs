@@ -16,9 +16,9 @@ namespace GestionDeTareas.API.Core.Business
             _entityMapper = entityMapper;
         }
 
-        public async Task<Response<ActivityDto>> InsertActivity(InsertActivityDto entity)
+        public async Task<Response<InsertActivityDto>> InsertActivity(InsertActivityDto entity)
         {
-            var result = new Response<ActivityDto>();
+            //var result = new Response<ActivityDto>();
 
             try
             {
@@ -28,18 +28,15 @@ namespace GestionDeTareas.API.Core.Business
 
                 await _unitOfWork.SaveChangesAsync();
 
-                var activityOut = _entityMapper.ToActivityDto(activity);
+                var activityOut = _entityMapper.ToInsertDto(activity);
 
-                result.Data = activityOut;
-                result.Message = $"The activity has been created";
+                return new Response<InsertActivityDto>(activityOut);
             }
             catch (Exception)
             {
 
                 throw;
             }
-
-            return result;
         }
 
         public async Task<Response<ActivityDto>> UpdateActivity(UpdateActivityDto data, int id)

@@ -1,4 +1,5 @@
-﻿using GestionDeTareas.API.Entities;
+﻿using GestionDeTareas.API.DataAccess.SeedsData;
+using GestionDeTareas.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionDeTareas.API.DataAccess
@@ -20,7 +21,7 @@ namespace GestionDeTareas.API.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.ApplyConfiguration(new SeedActivities());
         }
     }
 }
