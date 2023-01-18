@@ -4,9 +4,9 @@ namespace GestionDeTareas.API.Core.Models.DTOs.Activity
 {
     public class UpdateActivityDto : BaseDto
     {
-        [Key]
-        [Required(ErrorMessage = "Id is required")]
-        public int Id { get; set; }
+        //[Key]
+        //[Required(ErrorMessage = "Id is required")]
+        //public int Id { get; set; }
         [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
         [Required(ErrorMessage = "Description is required")]

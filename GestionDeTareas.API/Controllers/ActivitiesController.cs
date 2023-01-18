@@ -21,7 +21,7 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -46,7 +46,7 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpPatch]
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

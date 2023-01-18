@@ -39,28 +39,26 @@ namespace GestionDeTareas.API.Core.Business
             }
         }
 
-        public async Task<Response<ActivityDto>> UpdateActivity(UpdateActivityDto data, int id)
+        public async Task<Response<UpdateActivityDto>> UpdateActivity(UpdateActivityDto data, int id)
         {
             try
             {
-                var activity = await _unitOfWork.ActivitiesRepository.GetByIdAsync(id);
+                var Oldactivity = await _unitOfWork.ActivitiesRepository.GetByIdAsync(id);
 
-                if (activity == null || activity.IsDeleted == true)
+                if (Oldactivity == null || Oldactivity.IsDeleted == true)
                 {
-                    return new Response<ActivityDto>(null, false, null, "Not Found");
+                    return new Response<UpdateActivityDto>(null, false, null, "Not Found");
                 }
 
-                activity = _entityMapper.ToEntity(data);
+                var updatedActivity = _entityMapper.ToEntity(Oldactivity, data);
 
-                activity.Id = id;
-
-                await _unitOfWork.ActivitiesRepository.Update(activity);
+                await _unitOfWork.ActivitiesRepository.Update(Oldactivity);
 
                 _unitOfWork.SaveChanges();
 
-                var result = _entityMapper.ToActivityDto(activity);
+                UpdateActivityDto result = _entityMapper.ToUpdateDto(Oldactivity);
 
-                return new Response<ActivityDto>(result);
+                return new Response<UpdateActivityDto>(result);
             }
             catch (Exception)
             {

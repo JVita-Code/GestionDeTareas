@@ -32,16 +32,16 @@ public class EntityMapper : IEntityMapper
         };
     }
 
-    public Activity ToEntity(UpdateActivityDto updateDto)
+    public Activity ToEntity(Activity activity, UpdateActivityDto updateDto)
     {
-        return new Activity
-        {
-            Id = updateDto.Id,
-            Title = updateDto.Title,
-            Description = updateDto.Description,
-            IsCompleted = updateDto.IsCompleted,
-            CompletedAt = updateDto.CompletedAt
-        };
+        activity.Title = updateDto.Title ?? activity.Title;
+        activity.Description = updateDto.Description ?? activity.Description;
+        activity.IsCompleted = updateDto.IsCompleted;
+        activity.IsDeleted = updateDto.IsDeleted;
+        activity.ModifiedAt = updateDto.ModifiedAt ?? DateTime.UtcNow;
+        activity.CompletedAt = updateDto.CompletedAt ?? activity.CompletedAt;
+
+        return activity;
     }
 
     public ActivityDto ToActivityDto(Activity activity)
