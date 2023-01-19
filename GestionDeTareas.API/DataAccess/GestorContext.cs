@@ -19,6 +19,8 @@ namespace GestionDeTareas.API.DataAccess
         { }
 
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Entities.Type> Types { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

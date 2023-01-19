@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace GestionDeTareas.API
 {
@@ -18,6 +19,7 @@ namespace GestionDeTareas.API
     {
         public Startup(IConfiguration configuration)
         {
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             Configuration = configuration;
         }
 
@@ -32,6 +34,7 @@ namespace GestionDeTareas.API
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IActivityRepository, ActivityRepository>();
             services.AddTransient<IEntityMapper, EntityMapper>();
 
             //Business-Services

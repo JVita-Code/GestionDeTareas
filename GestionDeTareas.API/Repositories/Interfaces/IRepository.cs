@@ -15,7 +15,7 @@ namespace GestionDeTareas.API.Repositories.Interfaces
 
         Task<T> AddAsync(T entity);
 
-        Task DeleteAsync(int id);
+        Task<bool> Delete(T entity);
 
 
         Task<T> Update(T entity);
