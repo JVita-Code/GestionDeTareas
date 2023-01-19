@@ -15,5 +15,6 @@ namespace GestionDeTareas.API.Core.Models.DTOs.Activity
         public bool IsCompleted { get; set; }
         [DataType(DataType.Date)]
         public DateTime? CompletedAt { get; set; }
+        public int TypeId { get; set; }
     }
 }

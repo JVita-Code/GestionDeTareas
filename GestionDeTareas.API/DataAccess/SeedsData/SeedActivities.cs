@@ -7,6 +7,8 @@ namespace GestionDeTareas.API.DataAccess.SeedsData
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Activity> builder)
         {
+            Random rand = new Random();
+
             for (int i = 1; i < 10; i++)
             {
                 builder.HasData(
@@ -16,7 +18,8 @@ namespace GestionDeTareas.API.DataAccess.SeedsData
                         Title = "Actividad  " + i,
                         Description = "Descripcion de la actividad Número " + i,
                         ModifiedAt = System.DateTime.Now,
-                        IsDeleted = false
+                        IsDeleted = false,
+                        TypeId = rand.Next(1,11),
                     }
                 );
             }

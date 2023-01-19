@@ -13,5 +13,8 @@ namespace GestionDeTareas.API.Core.Models.DTOs.Activity
         [Required]
         public bool IsCompleted { get; set; }
         public DateTime? CompletedAt { get; set; }
+
+        [Required]
+        public int TypeId { get; set; }
     }
 }

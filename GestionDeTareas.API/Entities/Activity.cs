@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GestionDeTareas.API.Entities
 {
@@ -13,7 +15,12 @@ namespace GestionDeTareas.API.Entities
         public bool IsCompleted { get; set; }
         public DateTime? CompletedAt { get; set; }
 
-        //public int CategoryId { get; set; }
-        //public virtual Category Category { get; set; }
+        [Required]
+        [ForeignKey("TypeId")]
+        public int TypeId { get; set; }
+
+        //[JsonIgnore]
+        public Type Type { get; set; }
+        
     }
 }

@@ -17,7 +17,8 @@ public class EntityMapper : IEntityMapper
             CompletedAt = dto.CompletedAt,
             ModifiedAt = dto.ModifiedAt,
             IsDeleted = dto.IsDeleted,
-            DeletedAt = dto.DeletedAt
+            DeletedAt = dto.DeletedAt,
+            TypeId = dto.TypeId,
         };
     }
 
@@ -28,6 +29,7 @@ public class EntityMapper : IEntityMapper
             Title = insertDto.Title,
             Description = insertDto.Description,
             IsCompleted = insertDto.IsCompleted,
+            TypeId = insertDto.TypeId
             //CompletedAt = insertDto.CompletedAt
         };
     }
@@ -40,6 +42,7 @@ public class EntityMapper : IEntityMapper
         activity.IsDeleted = updateDto.IsDeleted;
         activity.ModifiedAt = updateDto.ModifiedAt ?? DateTime.UtcNow;
         activity.CompletedAt = updateDto.CompletedAt ?? activity.CompletedAt;
+        activity.TypeId = updateDto.TypeId;
 
         return activity;
     }
@@ -51,7 +54,8 @@ public class EntityMapper : IEntityMapper
             Title = activity.Title,
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
-            CompletedAt = activity.CompletedAt
+            CompletedAt = activity.CompletedAt,
+            TypeId = activity.TypeId
         };
     }
 
@@ -63,6 +67,7 @@ public class EntityMapper : IEntityMapper
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
             //CompletedAt = activity.CompletedAt
+            TypeId = activity.TypeId
         };
     }
 
@@ -73,7 +78,8 @@ public class EntityMapper : IEntityMapper
             Title = activity.Title,
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
-            CompletedAt = activity.CompletedAt
+            CompletedAt = activity.CompletedAt,
+            TypeId = activity.TypeId
         };
     }
 
