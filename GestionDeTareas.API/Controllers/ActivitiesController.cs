@@ -1,17 +1,12 @@
 ﻿using GestionDeTareas.API.Core.Interfaces;
 using GestionDeTareas.API.Core.Models;
 using GestionDeTareas.API.Core.Models.DTOs.Activity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace GestionDeTareas.API.Controllers;
 
-
 [Route("activities")]
 [ApiController]
-
 public class ActivitiesController : ControllerBase
 {
     private readonly IActivitiesBusiness _activitiesService;
@@ -24,65 +19,66 @@ public class ActivitiesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        try
-        {
-            var result = await _activitiesService.GetActivitiesAsync(true);
+        var result = await _activitiesService.GetActivitiesAsync(true);
 
-            if (!result.Succeeded)
+        if (!result.Succeeded)
+        {
+            if (result.Errors.Count > 0)
             {
-                return StatusCode(400, result);
+                return StatusCode(500, result);
             }
 
-            return Ok(result);
+            return StatusCode(400, result);
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        try
+        var result = await _activitiesService.GetActivityAsync(id);
+
+        if (result.Succeeded == false)
         {
-            var result = await _activitiesService.GetActivityAsync(id);
-            if (result.Succeeded == false)
+            if (result.Errors.Count > 0)
             {
-                return StatusCode(400, result);
+                return StatusCode(500, result);
             }
-            return Ok(result);
+
+            return BadRequest(result);
         }
-        catch (System.Exception e)
-        {
-            return StatusCode(500, new Response<string>(e.Message, false, null, "Error"));
-        }
+
+        return Ok(result);
     }
 
     [HttpPost]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromForm] InsertActivityDto activityDto)
     {
-        try
+        if (!ModelState.IsValid)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+            return BadRequest();
+        }
 
-            var response = await _activitiesService.InsertActivityAsync(activityDto);
+        var response = await _activitiesService.InsertActivityAsync(activityDto);
 
+        if (response.Succeeded)
+        {
             return Ok(response);
         }
-        catch (Exception e)
+        else
         {
-            var listErrors = new string[] { e.Message };
-            return StatusCode(500, new Response<InsertActivityDto>(data: null, succeeded: false, errors: listErrors, message: "Server Error"));
-        }
+            if (response.Errors.Count > 0)
+            {
+                return StatusCode(500, response);
+            }
+
+            return BadRequest(response);
+        }                
     }
 
     [HttpPatch]
@@ -92,49 +88,44 @@ public class ActivitiesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update([FromForm] UpdateActivityDto data, int id)
     {
-        try
+        if (data.Title == null && data.Description == null)
         {
-            if (data.Title == null && data.Description == null)
-            {
-                return BadRequest(new Response<string>(null, false, null, "Please select at least one field to modify."));
-            }
-
-            var result = await _activitiesService.UpdateActivityAsync(data, id);
-
-            if (result.Succeeded == false)
-            {
-                return BadRequest(result);
-            }
-
-            return Ok(result);
+            return BadRequest(new Response<string>(null, false, null, "Please select at least one field to modify."));
         }
 
-        catch (Exception e)
+        var result = await _activitiesService.UpdateActivityAsync(data, id);
+
+        if (result.Succeeded)
         {
-            var error = new Response<string>(e.Message, false, null, "Server Error");
-            return StatusCode(500, error);
+            return Ok(result);
+        }
+        else
+        {
+            if (result.Errors.Count > 0)
+            {
+                return StatusCode(500, result);
+            }
+
+            return BadRequest(result);
         }
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-        try
-        {
-            var result = await _activitiesService.DeleteAsync(id);
+        var result = await _activitiesService.DeleteAsync(id);
 
-            if (!result.Succeeded)
+        if (!result.Succeeded)
+        {
+            if (result.Errors.Count > 0)
             {
-                return StatusCode(statusCode: 404, result);
+                return StatusCode(500, result);
             }
 
-            return Ok(result);
+            return StatusCode(statusCode: 404, result);
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
+        return Ok(result);
     }
 }
 

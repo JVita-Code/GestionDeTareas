@@ -60,15 +60,12 @@ namespace GestionDeTareas.API.Repositories
             return await _entities.CountAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> Delete(T entity)
         {
-            var entity = await GetByIdAsync(id);
-
-            if (entity == null || entity.IsDeleted == true)
-                throw new InvalidOperationException("Entity not found");
-
             entity.IsDeleted = true;
             _entities.Update(entity);
+
+            return true;
         }
 
         public async Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> expression)

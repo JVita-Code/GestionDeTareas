@@ -9,11 +9,13 @@ namespace GestionDeTareas.API.Core.Business
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntityMapper _entityMapper;
+        private readonly IActivityRepository _activityRepository;
 
-        public ActivitiesBusiness(IUnitOfWork unitOfWork, IEntityMapper entityMapper)
+        public ActivitiesBusiness(IUnitOfWork unitOfWork, IEntityMapper entityMapper, IActivityRepository activityRepository)
         {
             _unitOfWork = unitOfWork;
             _entityMapper = entityMapper;
+            _activityRepository = activityRepository;
         }        
 
         public async Task<Response<IEnumerable<ActivityDto>>> GetActivitiesAsync(bool listEntity)
@@ -24,58 +26,64 @@ namespace GestionDeTareas.API.Core.Business
 
                 if (activityList.Count() == 0)
                 {
-                    return null;
+                    return new Response<IEnumerable<ActivityDto>>(null, false, null, "Table is Empty.");
                 }
 
-                var activitiesDtoList = activityList.Select(_entityMapper.ActivityToActivityDto)
-                                                                  .ToList();
-
-                //var activitiesDtoList = new List<ActivityDto>();
-
-                //foreach (var activity in activityList)
-                //{
-                //    activitiesDtoList.Add(_entityMapper.ActivityToActivityDto(activity));
-                //}
+                var activitiesDtoList = activityList.Select(_entityMapper.ActivityToActivityDto)                                                                  .ToList();
 
                 return new Response<IEnumerable<ActivityDto>>(activitiesDtoList);
             }
             catch (Exception ex)
             {
-
-                throw;
+                return new Response<IEnumerable<ActivityDto>>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
             }
         }
 
         public async Task<Response<ActivityDto>> GetActivityAsync(int id)
         {
-            var activity = await _unitOfWork.ActivitiesRepository.GetByIdAsync(id);
-            if (activity == null || activity.IsDeleted == true)
+            var response = new Response<ActivityDto>();
+            try
             {
-                return new Response<ActivityDto>(null, false, null, "Not Found");
+                var activity = await _unitOfWork.ActivitiesRepository.GetByIdAsync(id);
+                
+                if (activity == null)
+                {
+                    return new Response<ActivityDto>(null, false, null, "Not Found");
+                }
+
+                if (activity.IsDeleted)
+                {
+                    return new Response<ActivityDto>(null, false, null, "Activity is deleted");
+                }
+
+                return new Response<ActivityDto>(_entityMapper.ToActivityDto(activity));
             }
-            return new Response<ActivityDto>(_entityMapper.ToActivityDto(activity));
+            catch (Exception ex)
+            {
+                return new Response<ActivityDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+            }
         }
 
         public async Task<Response<InsertActivityDto>> InsertActivityAsync(InsertActivityDto entity)
         {
-            //var result = new Response<ActivityDto>();
-
             try
             {
-                var activity = _entityMapper.ToEntity(entity);
+                var activity = _entityMapper.ToEntity(entity); //MODIFICAR ACA
+
+                if (await _activityRepository.ExistsByTitle(entity.Title))
+                {
+                    return new Response<InsertActivityDto>(null, false, null, "An activity already exists with that name.");
+                }
 
                 await _unitOfWork.ActivitiesRepository.AddAsync(activity);
 
                 await _unitOfWork.SaveChangesAsync();
 
-                var activityOut = _entityMapper.ToInsertDto(activity);
-
-                return new Response<InsertActivityDto>(activityOut);
+                return new Response<InsertActivityDto>(_entityMapper.ToInsertDto(activity));
             }
             catch (Exception ex)
             {
-
-                throw;
+                return new Response<InsertActivityDto>(null, false, new string[] { ex.Message, ex.InnerException.Message}, "Server Error");
             }
         }
 
@@ -96,14 +104,11 @@ namespace GestionDeTareas.API.Core.Business
 
                 _unitOfWork.SaveChanges();
 
-                UpdateActivityDto result = _entityMapper.ToUpdateDto(Oldactivity);
-
-                return new Response<UpdateActivityDto>(result);
+                return new Response<UpdateActivityDto>(_entityMapper.ToUpdateDto(Oldactivity));
             }
             catch (Exception ex)
             {
-
-                throw;
+                return new Response<UpdateActivityDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
             }
         }
 
@@ -115,10 +120,15 @@ namespace GestionDeTareas.API.Core.Business
 
                 if (activity == null)
                 {
-                    return new Response<string>(null, false, null, "Activity Not Found");
+                    return new Response<string>(null, false, null, "Activity Not Found.");
                 }
 
-                await _unitOfWork.ActivitiesRepository.DeleteAsync(id);
+                if (activity.IsDeleted)
+                {
+                    return new Response<string>(null, false, null, "Activity already deleted.");
+                }
+
+                bool deleted = await _unitOfWork.ActivitiesRepository.Delete(activity);
 
                 _unitOfWork.SaveChanges();
 
@@ -126,7 +136,7 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                throw;
+                return new Response<string>(null, false, new string[] { ex.Message, ex.InnerException.Message}, "Server Error");
             }            
         }
     }
