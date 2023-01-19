@@ -14,9 +14,49 @@ namespace GestionDeTareas.API.Core.Business
         {
             _unitOfWork = unitOfWork;
             _entityMapper = entityMapper;
+        }        
+
+        public async Task<Response<IEnumerable<ActivityDto>>> GetActivitiesAsync(bool listEntity)
+        {
+            try
+            {
+                var activityList = await _unitOfWork.ActivitiesRepository.GetAllAsync(listEntity);
+
+                if (activityList.Count() == 0)
+                {
+                    return null;
+                }
+
+                var activitiesDtoList = activityList.Select(_entityMapper.ActivityToActivityDto)
+                                                                  .ToList();
+
+                //var activitiesDtoList = new List<ActivityDto>();
+
+                //foreach (var activity in activityList)
+                //{
+                //    activitiesDtoList.Add(_entityMapper.ActivityToActivityDto(activity));
+                //}
+
+                return new Response<IEnumerable<ActivityDto>>(activitiesDtoList);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
-        public async Task<Response<InsertActivityDto>> InsertActivity(InsertActivityDto entity)
+        public async Task<Response<ActivityDto>> GetActivityAsync(int id)
+        {
+            var activity = await _unitOfWork.ActivitiesRepository.GetByIdAsync(id);
+            if (activity == null || activity.IsDeleted == true)
+            {
+                return new Response<ActivityDto>(null, false, null, "Not Found");
+            }
+            return new Response<ActivityDto>(_entityMapper.ToActivityDto(activity));
+        }
+
+        public async Task<Response<InsertActivityDto>> InsertActivityAsync(InsertActivityDto entity)
         {
             //var result = new Response<ActivityDto>();
 
@@ -32,14 +72,14 @@ namespace GestionDeTareas.API.Core.Business
 
                 return new Response<InsertActivityDto>(activityOut);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
             }
         }
 
-        public async Task<Response<UpdateActivityDto>> UpdateActivity(UpdateActivityDto data, int id)
+        public async Task<Response<UpdateActivityDto>> UpdateActivityAsync(UpdateActivityDto data, int id)
         {
             try
             {
@@ -60,11 +100,34 @@ namespace GestionDeTareas.API.Core.Business
 
                 return new Response<UpdateActivityDto>(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
             }
+        }
+
+        public async Task<Response<string>> DeleteAsync(int id)
+        {
+            try
+            {
+                var activity = await _unitOfWork.ActivitiesRepository.GetByIdAsync(id);
+
+                if (activity == null)
+                {
+                    return new Response<string>(null, false, null, "Activity Not Found");
+                }
+
+                await _unitOfWork.ActivitiesRepository.DeleteAsync(id);
+
+                _unitOfWork.SaveChanges();
+
+                return new Response<string>(null, true, null, "Activity Deleted");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }            
         }
     }
 }

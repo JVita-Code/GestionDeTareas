@@ -21,12 +21,51 @@ public class ActivitiesController : ControllerBase
         _activitiesService = activitiesService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        try
+        {
+            var result = await _activitiesService.GetActivitiesAsync(true);
+
+            if (!result.Succeeded)
+            {
+                return StatusCode(400, result);
+            }
+
+            return Ok(result);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        try
+        {
+            var result = await _activitiesService.GetActivityAsync(id);
+            if (result.Succeeded == false)
+            {
+                return StatusCode(400, result);
+            }
+            return Ok(result);
+        }
+        catch (System.Exception e)
+        {
+            return StatusCode(500, new Response<string>(e.Message, false, null, "Error"));
+        }
+    }
+
     [HttpPost]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Insert([FromForm] InsertActivityDto activityDto)
+    public async Task<IActionResult> Create([FromForm] InsertActivityDto activityDto)
     {
         try
         {
@@ -35,7 +74,7 @@ public class ActivitiesController : ControllerBase
                 return BadRequest();
             }
 
-            var response = await _activitiesService.InsertActivity(activityDto);
+            var response = await _activitiesService.InsertActivityAsync(activityDto);
 
             return Ok(response);
         }
@@ -60,7 +99,7 @@ public class ActivitiesController : ControllerBase
                 return BadRequest(new Response<string>(null, false, null, "Please select at least one field to modify."));
             }
 
-            var result = await _activitiesService.UpdateActivity(data, id);
+            var result = await _activitiesService.UpdateActivityAsync(data, id);
 
             if (result.Succeeded == false)
             {
@@ -74,6 +113,27 @@ public class ActivitiesController : ControllerBase
         {
             var error = new Response<string>(e.Message, false, null, "Server Error");
             return StatusCode(500, error);
+        }
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            var result = await _activitiesService.DeleteAsync(id);
+
+            if (!result.Succeeded)
+            {
+                return StatusCode(statusCode: 404, result);
+            }
+
+            return Ok(result);
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
 }

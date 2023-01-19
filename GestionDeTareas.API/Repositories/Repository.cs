@@ -20,12 +20,7 @@ namespace GestionDeTareas.API.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync(bool listEntity)
         {
-            if (!listEntity)
-            {
-                return await _entities.Where(e => e.IsDeleted).ToListAsync();
-            }
-
-            return await _entities.Where(e => e.IsDeleted == false).ToListAsync();
+            return await _entities.Where(e => e.IsDeleted == (listEntity ? false : true)).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate, params System.Linq.Expressions.Expression<Func<T, object>>[] include)

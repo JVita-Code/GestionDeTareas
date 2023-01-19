@@ -10,7 +10,7 @@ public class EntityMapper : IEntityMapper
     {
         return new Activity
         {
-            Id = dto.Id ?? 0,
+            //Id = dto.Id ?? 0,
             Title = dto.Title,
             Description = dto.Description,
             IsCompleted = dto.IsCompleted,
@@ -69,6 +69,17 @@ public class EntityMapper : IEntityMapper
     public UpdateActivityDto ToUpdateDto(Activity activity)
     {
         return new UpdateActivityDto
+        {
+            Title = activity.Title,
+            Description = activity.Description,
+            IsCompleted = activity.IsCompleted,
+            CompletedAt = activity.CompletedAt
+        };
+    }
+
+    public ActivityDto ActivityToActivityDto(Activity activity)
+    {
+        return new ActivityDto
         {
             Title = activity.Title,
             Description = activity.Description,

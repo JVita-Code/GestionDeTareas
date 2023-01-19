@@ -12,6 +12,6 @@ namespace GestionDeTareas.API.Core.Interfaces
         ActivityDto ToActivityDto(Activity activity);
         InsertActivityDto ToInsertDto(Activity activity);
         UpdateActivityDto ToUpdateDto(Activity activity);
-
+        ActivityDto ActivityToActivityDto(Activity activity);
     }
 }
