@@ -5,10 +5,10 @@ Características:
 - Crud
 - ORM: Entity Framework Core (CodeFirst)
 - Division por capas:
-  * Controller
-  * Core -> + capa Services/Business 
-  * Repositories
-  * Entities
+  -- Controller
+  -- Core -> + capa Services/Business (lógica de negocio) 
+  -- Repositories
+  -- Entities
  - Patron de diseño Unit Of Work
  - Patron de diseño Repositorio + Repositorio Genérico
  - Dtos
@@ -17,8 +17,8 @@ Características:
  - Programacion Async
  - Injeccion de dependencias
  - Jwt Token Bearer 
-  * Login
-  * Registro
+    -- Login
+    -- Registro
  - Swagger Doc
  - Seed Data -> Data builder
  - Skinny Controllers
