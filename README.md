@@ -1,4 +1,4 @@
-# GestionDeTareas - API Rest - CRUD
+# Gestor de Tareas - API Rest - CRUD - NET 6.0 - EF Core
 
 Características:
 
