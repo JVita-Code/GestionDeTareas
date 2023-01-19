@@ -1,5 +1,4 @@
 ﻿using GestionDeTareas.API.Core.Models.DTOs;
-using GestionDeTareas.API.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +24,7 @@ namespace GestionDeTareas.API.Controllers
             this.signInManager = signInManager;
         }
 
-        [HttpPost("registrar")]
+        [HttpPost("register")]
         public async Task<ActionResult<ResponseAuth>> Register(UserCredentials userCredentials)
         {
             var user = new IdentityUser { UserName = userCredentials.Email, Email = userCredentials.Email};

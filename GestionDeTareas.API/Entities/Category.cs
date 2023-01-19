@@ -2,7 +2,7 @@
 
 namespace GestionDeTareas.API.Entities
 {
-    public class Type : EntityBase
+    public class Category : EntityBase
     {
         [Required]
         [MaxLength(255)]

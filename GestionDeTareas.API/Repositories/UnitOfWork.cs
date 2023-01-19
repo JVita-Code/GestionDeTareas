@@ -11,6 +11,7 @@ namespace GestionDeTareas.API.Repositories
 
         private readonly GestorContext _context;
         private readonly IRepository<Activity> _activitiesRepository;
+        private readonly IRepository<Entities.Category> _typesRepository;
 
         public UnitOfWork(GestorContext context)
         {
@@ -18,6 +19,7 @@ namespace GestionDeTareas.API.Repositories
         }
 
         public IRepository<Activity> ActivitiesRepository => _activitiesRepository ?? new Repository<Activity>(_context);
+        public IRepository<Entities.Category> CategoriesRepository => _typesRepository ?? new Repository<Entities.Category>(_context);
 
         public void SaveChanges()
         {

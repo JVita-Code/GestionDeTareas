@@ -1,5 +1,6 @@
 ﻿using GestionDeTareas.API.Core.Interfaces;
 using GestionDeTareas.API.Core.Models.DTOs.Activity;
+using GestionDeTareas.API.Core.Models.DTOs.Category;
 using GestionDeTareas.API.Entities;
 
 namespace GestionDeTareas.API.Core.Mapper;
@@ -18,7 +19,7 @@ public class EntityMapper : IEntityMapper
             ModifiedAt = dto.ModifiedAt,
             IsDeleted = dto.IsDeleted,
             DeletedAt = dto.DeletedAt,
-            TypeId = dto.TypeId,
+            CategoryId = dto.CategoryId,
         };
     }
 
@@ -29,7 +30,7 @@ public class EntityMapper : IEntityMapper
             Title = insertDto.Title,
             Description = insertDto.Description,
             IsCompleted = insertDto.IsCompleted,
-            TypeId = insertDto.TypeId
+            CategoryId = insertDto.CategoryId
             //CompletedAt = insertDto.CompletedAt
         };
     }
@@ -42,7 +43,7 @@ public class EntityMapper : IEntityMapper
         activity.IsDeleted = updateDto.IsDeleted;
         activity.ModifiedAt = updateDto.ModifiedAt ?? DateTime.UtcNow;
         activity.CompletedAt = updateDto.CompletedAt ?? activity.CompletedAt;
-        activity.TypeId = updateDto.TypeId;
+        activity.CategoryId = updateDto.CategoryId;
 
         return activity;
     }
@@ -55,7 +56,7 @@ public class EntityMapper : IEntityMapper
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
             CompletedAt = activity.CompletedAt,
-            TypeId = activity.TypeId
+            CategoryId = activity.CategoryId
         };
     }
 
@@ -67,7 +68,7 @@ public class EntityMapper : IEntityMapper
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
             //CompletedAt = activity.CompletedAt
-            TypeId = activity.TypeId
+            CategoryId = activity.CategoryId
         };
     }
 
@@ -79,7 +80,7 @@ public class EntityMapper : IEntityMapper
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
             CompletedAt = activity.CompletedAt,
-            TypeId = activity.TypeId
+            CategoryId = activity.CategoryId
         };
     }
 
@@ -91,6 +92,24 @@ public class EntityMapper : IEntityMapper
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
             CompletedAt = activity.CompletedAt
+        };
+    }
+
+    public Entities.Category ToEntity(CategoryDto dto)
+    {
+        return new Entities.Category
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+        };
+    }
+
+    public CategoryDto ToCategoryDto(Category category)
+    {
+        return new CategoryDto
+        {
+            Name = category.Name,
+            Description = category.Description
         };
     }
 }

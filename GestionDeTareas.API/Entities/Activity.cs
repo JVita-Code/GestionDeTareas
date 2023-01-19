@@ -16,11 +16,11 @@ namespace GestionDeTareas.API.Entities
         public DateTime? CompletedAt { get; set; }
 
         [Required]
-        [ForeignKey("TypeId")]
-        public int TypeId { get; set; }
+        [ForeignKey("CategoryId")]
+        public int CategoryId { get; set; }
 
         //[JsonIgnore]
-        public Type Type { get; set; }
+        public Category Category { get; set; }
         
     }
 }
