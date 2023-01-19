@@ -112,4 +112,25 @@ public class EntityMapper : IEntityMapper
             Description = category.Description
         };
     }
+
+    public Category ToEntity(Category category, CategoryDto categoryDto)
+    {
+        category.Name = categoryDto.Name;
+        category.Description = categoryDto.Description;
+        category.Activities = categoryDto.Activities;
+        category.ModifiedAt = categoryDto.ModifiedAt ?? DateTime.UtcNow;
+        category.IsDeleted = categoryDto.IsDeleted;
+        category.DeletedAt = categoryDto.DeletedAt;
+
+        return category;
+    }
+
+    public CategoryDto ToDto(Category activity)
+    {
+        return new CategoryDto
+        {
+            Name = activity.Name,
+            Description = activity.Description
+        };
+    }
 }
