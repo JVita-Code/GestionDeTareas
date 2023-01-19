@@ -34,11 +34,15 @@ namespace GestionDeTareas.API
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            //Repos
             services.AddScoped<IActivityRepository, ActivityRepository>();
+
             services.AddTransient<IEntityMapper, EntityMapper>();
 
             //Business-Services
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
+            services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();

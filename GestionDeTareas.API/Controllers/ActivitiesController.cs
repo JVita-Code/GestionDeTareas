@@ -68,7 +68,7 @@ public class ActivitiesController : ControllerBase
 
         if (response.Succeeded)
         {
-            return Ok(response);
+            return Created(Url.Action(nameof(Create)), response);
         }
         else
         {

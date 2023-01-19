@@ -29,7 +29,8 @@ namespace GestionDeTareas.API.Core.Business
                     return new Response<IEnumerable<ActivityDto>>(null, false, null, "Table is Empty.");
                 }
 
-                var activitiesDtoList = activityList.Select(_entityMapper.ActivityToActivityDto)                                                                  .ToList();
+                var activitiesDtoList = activityList.Select(_entityMapper.ActivityToActivityDto)                                                                  
+                                                                                                .ToList();
 
                 return new Response<IEnumerable<ActivityDto>>(activitiesDtoList);
             }

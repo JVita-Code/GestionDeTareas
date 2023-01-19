@@ -20,11 +20,13 @@ namespace GestionDeTareas.API.DataAccess
 
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Entities.Type> Types { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new SeedCategories());
             modelBuilder.ApplyConfiguration(new SeedActivities());
         }
     }

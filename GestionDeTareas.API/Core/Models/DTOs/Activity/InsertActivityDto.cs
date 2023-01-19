@@ -18,6 +18,6 @@ namespace GestionDeTareas.API.Core.Models.DTOs.Activity
         //[DataType(DataType.Date)]
         //public DateTime? CompletedAt { get; set; } = DateTime.Now;
 
-        public int TypeId { get; set; }
+        public int CategoryId { get; set; }
     }
 }
