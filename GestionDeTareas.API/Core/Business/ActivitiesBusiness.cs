@@ -36,7 +36,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<IEnumerable<ActivityDto>>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };               
+
+                return new Response<IEnumerable<ActivityDto>>(null, false, errorMessages, "Server Error");
             }
         }
 
@@ -61,7 +63,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<ActivityDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<ActivityDto>(null, false, errorMessages, "Server Error");
             }
         }
 
@@ -84,7 +88,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<InsertActivityDto>(null, false, new string[] { ex.Message, ex.InnerException.Message}, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<InsertActivityDto>(null, false, errorMessages, "Server Error");
             }
         }
 
@@ -109,7 +115,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<UpdateActivityDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<UpdateActivityDto>(null, false, errorMessages, "Server Error");
             }
         }
 
@@ -137,7 +145,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<string>(null, false, new string[] { ex.Message, ex.InnerException.Message}, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<string>(null, false, errorMessages, "Server Error");
             }            
         }
     }
