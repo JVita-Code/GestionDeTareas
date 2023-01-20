@@ -35,7 +35,7 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<IEnumerable<CategoryDto>>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                return new Response<IEnumerable<CategoryDto>>(null, false, new List<string> { ex.Message, ex.InnerException.Message }, "Server Error");
             }
         }
 
@@ -60,7 +60,7 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<CategoryDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                return new Response<CategoryDto>(null, false, new List<string> { ex.Message, ex.InnerException.Message }, "Server Error");
             }
         }
 
@@ -83,7 +83,7 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<CategoryDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                return new Response<CategoryDto>(null, false, new List<string> { ex.Message, ex.InnerException.Message }, "Server Error");
             }
         }
 
@@ -108,7 +108,7 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<CategoryDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                return new Response<CategoryDto>(null, false, new List<string> { ex.Message, ex.InnerException.Message }, "Server Error");
             }
         }
         public async Task<Response<string>> DeleteAsync(int id)
@@ -135,7 +135,7 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<string>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                return new Response<string>(null, false, new List<string> { ex.Message, ex.InnerException.Message }, "Server Error");
             }
         }
     }
