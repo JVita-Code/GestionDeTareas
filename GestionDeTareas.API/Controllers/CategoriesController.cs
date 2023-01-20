@@ -1,6 +1,8 @@
 ﻿using GestionDeTareas.API.Core.Interfaces;
 using GestionDeTareas.API.Core.Models;
 using GestionDeTareas.API.Core.Models.DTOs.Category;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionDeTareas.API.Controllers
@@ -8,6 +10,8 @@ namespace GestionDeTareas.API.Controllers
     //[Route("api/[controller]")]
     [Route("categories")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoriesBusiness _categoriesService;
@@ -18,6 +22,7 @@ namespace GestionDeTareas.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var result = await _categoriesService.GetCategoriesAsync(true);
@@ -36,6 +41,7 @@ namespace GestionDeTareas.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _categoriesService.GetCategoryAsync(id);
@@ -53,9 +59,8 @@ namespace GestionDeTareas.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpPost]        
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromForm] InsertCategoryDto categoryDto)
@@ -83,7 +88,6 @@ namespace GestionDeTareas.API.Controllers
         }
 
         [HttpPatch]
-        //[Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -111,7 +115,7 @@ namespace GestionDeTareas.API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _categoriesService.DeleteAsync(id);

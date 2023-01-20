@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 
 namespace GestionDeTareas.API
 {
@@ -54,6 +55,18 @@ namespace GestionDeTareas.API
 
             services.AddSwaggerGen(c =>
             {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Gestor de Tareas",
+                    Version = "v1",
+                    Description = "API Rest - Actividades y Categorias",
+                    Contact = new OpenApiContact
+                    {
+                        Email = "juanvitan@gmail.com",
+                        Name = "Juan Vitale"
+                    },
+                });
+                
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -76,7 +89,11 @@ namespace GestionDeTareas.API
                         },
                         new string[] { }
                     }
-                });                
+                }); 
+                
+                var archivoXml = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var rutaXml = Path.Combine(AppContext.BaseDirectory, archivoXml);
+                c.IncludeXmlComments(rutaXml);
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -90,7 +107,14 @@ namespace GestionDeTareas.API
                     ClockSkew = TimeSpan.Zero
                 });
 
-            
+            //services.AddCors(o =>
+            //{
+            //    o.AddDefaultPolicy(builder =>
+            //    {
+            //        builder.WithOrigins("https://www.apirequest.io").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders();
+            //    });
+            //});
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -111,6 +135,8 @@ namespace GestionDeTareas.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //app.UseCors();
 
             app.UseAuthentication();
 

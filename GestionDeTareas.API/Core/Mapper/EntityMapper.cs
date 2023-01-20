@@ -56,7 +56,8 @@ public class EntityMapper : IEntityMapper
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
             CompletedAt = activity.CompletedAt,
-            CategoryId = activity.CategoryId
+            CategoryId = activity.CategoryId,
+            ModifiedAt = activity.ModifiedAt
         };
     }
 

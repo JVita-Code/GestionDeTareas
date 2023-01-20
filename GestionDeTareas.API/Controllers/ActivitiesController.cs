@@ -1,12 +1,15 @@
 ﻿using GestionDeTareas.API.Core.Interfaces;
 using GestionDeTareas.API.Core.Models;
 using GestionDeTareas.API.Core.Models.DTOs.Activity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionDeTareas.API.Controllers;
 
 [Route("activities")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class ActivitiesController : ControllerBase
 {
     private readonly IActivitiesBusiness _activitiesService;
@@ -17,6 +20,7 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll()
     {
         var result = await _activitiesService.GetActivitiesAsync(true);
@@ -35,6 +39,10 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get(int id)
     {
         var result = await _activitiesService.GetActivityAsync(id);
@@ -53,8 +61,7 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpPost]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromForm] InsertActivityDto activityDto)
@@ -81,8 +88,13 @@ public class ActivitiesController : ControllerBase
         }                
     }
 
+    /// <summary>
+    /// Updates an activity.
+    /// </summary>
+    /// <param name="data"> New info.</param>
+    /// <param name="id"> Id of the activity.</param>
+    /// <returns></returns>
     [HttpPatch]
-    //[Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -110,7 +122,15 @@ public class ActivitiesController : ControllerBase
         }
     }
 
-    [HttpDelete]
+    /// <summary>
+    /// Deletes an activity.
+    /// </summary>
+    /// <param name="id">id of the activity to delete</param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _activitiesService.DeleteAsync(id);
