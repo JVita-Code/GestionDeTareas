@@ -23,5 +23,6 @@ Características:
  - Seed Data -> Data builder
  - Skinny Controllers
  - Data Annotations
+ - Unit Tests -> xUnit + Moq
   
   
