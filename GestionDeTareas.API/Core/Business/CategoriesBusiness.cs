@@ -1,5 +1,6 @@
 ﻿using GestionDeTareas.API.Core.Interfaces;
 using GestionDeTareas.API.Core.Models;
+using GestionDeTareas.API.Core.Models.DTOs.Activity;
 using GestionDeTareas.API.Core.Models.DTOs.Category;
 using GestionDeTareas.API.Repositories.Interfaces;
 
@@ -35,7 +36,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<IEnumerable<CategoryDto>>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<IEnumerable<CategoryDto>>(null, false, errorMessages, "Server Error");
             }
         }
 
@@ -60,7 +63,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<CategoryDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<CategoryDto>(null, false, errorMessages, "Server Error");
             }
         }
 
@@ -83,7 +88,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<CategoryDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<CategoryDto>(null, false, errorMessages, "Server Error");
             }
         }
 
@@ -108,7 +115,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<CategoryDto>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<CategoryDto>(null, false, errorMessages, "Server Error");
             }
         }
         public async Task<Response<string>> DeleteAsync(int id)
@@ -135,7 +144,9 @@ namespace GestionDeTareas.API.Core.Business
             }
             catch (Exception ex)
             {
-                return new Response<string>(null, false, new string[] { ex.Message, ex.InnerException.Message }, "Server Error");
+                var errorMessages = new List<string> { ex.Message, ex.InnerException?.Message ?? "" };
+
+                return new Response<string>(null, false, errorMessages, "Server Error");
             }
         }
     }
