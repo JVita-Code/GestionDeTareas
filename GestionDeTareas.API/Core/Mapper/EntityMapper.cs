@@ -95,7 +95,7 @@ public class EntityMapper : IEntityMapper
         };
     }
 
-    public Entities.Category ToEntity(CategoryDto dto)
+    public Category ToEntity(CategoryDto dto)
     {
         return new Entities.Category
         {
