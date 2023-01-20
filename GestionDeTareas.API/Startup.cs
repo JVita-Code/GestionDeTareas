@@ -37,6 +37,7 @@ namespace GestionDeTareas.API
 
             //Repos
             services.AddScoped<IActivityRepository, ActivityRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             services.AddTransient<IEntityMapper, EntityMapper>();
 

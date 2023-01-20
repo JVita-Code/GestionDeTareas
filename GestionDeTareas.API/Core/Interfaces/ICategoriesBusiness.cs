@@ -7,7 +7,8 @@ namespace GestionDeTareas.API.Core.Interfaces
     {
         Task<Response<IEnumerable<CategoryDto>>> GetCategoriesAsync(bool listEntity);
         Task<Response<CategoryDto>> GetCategoryAsync(int id);
-        Task<Response<CategoryDto>> InsertCategoryAsync(CategoryDto entity);
+        //Task<Response<CategoryDto>> InsertCategoryAsync(CategoryDto entity);
+        Task<Response<CategoryDto>> InsertCategoryAsync(InsertCategoryDto entity);
         Task<Response<CategoryDto>> UpdateCategoryAsync(CategoryDto entity, int id);
         Task<Response<string>> DeleteAsync(int id);
     }

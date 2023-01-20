@@ -16,6 +16,7 @@ namespace GestionDeTareas.API.Core.Interfaces
 
         //Type
         Category ToEntity(CategoryDto dto);
+        Category ToEntity(InsertCategoryDto dto);
         Category ToEntity(Category category, CategoryDto categoryDto);
         CategoryDto ToDto(Category activity);
         CategoryDto ToCategoryDto(Category dto);

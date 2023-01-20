@@ -58,7 +58,7 @@ namespace GestionDeTareas.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromForm] CategoryDto categoryDto)
+        public async Task<IActionResult> Create([FromForm] InsertCategoryDto categoryDto)
         {
             if (!ModelState.IsValid)
             {

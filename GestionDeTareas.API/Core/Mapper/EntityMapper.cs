@@ -91,7 +91,8 @@ public class EntityMapper : IEntityMapper
             Title = activity.Title,
             Description = activity.Description,
             IsCompleted = activity.IsCompleted,
-            CompletedAt = activity.CompletedAt
+            CompletedAt = activity.CompletedAt,
+            ModifiedAt = activity.ModifiedAt,
         };
     }
 
@@ -101,15 +102,29 @@ public class EntityMapper : IEntityMapper
         {
             Name = dto.Name,
             Description = dto.Description,
+            Activities = dto.Activities
         };
     }
+
+    public Category ToEntity(InsertCategoryDto dto)
+    {
+        return new Entities.Category
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            ModifiedAt = dto.ModifiedAt ?? DateTime.UtcNow,
+        };
+    }
+
+
 
     public CategoryDto ToCategoryDto(Category category)
     {
         return new CategoryDto
         {
             Name = category.Name,
-            Description = category.Description
+            Description = category.Description,
+            ModifiedAt = category.ModifiedAt,
         };
     }
 

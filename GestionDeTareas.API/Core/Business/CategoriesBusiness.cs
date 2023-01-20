@@ -69,7 +69,7 @@ namespace GestionDeTareas.API.Core.Business
             }
         }
 
-        public async Task<Response<CategoryDto>> InsertCategoryAsync(CategoryDto entity)
+        public async Task<Response<CategoryDto>> InsertCategoryAsync(InsertCategoryDto entity)
         {
             try
             {
