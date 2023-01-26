@@ -1,16 +1,9 @@
 ﻿using GestionDeTareas.API.Core.Business;
 using GestionDeTareas.API.Core.Interfaces;
-using GestionDeTareas.API.Core.Mapper;
 using GestionDeTareas.API.Core.Models.DTOs.Activity;
 using GestionDeTareas.API.Entities;
 using GestionDeTareas.API.Repositories.Interfaces;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace GestionDeTareas.Tests
 {

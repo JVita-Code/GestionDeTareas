@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
-using System.Text.Json.Serialization;
 
 namespace GestionDeTareas.API.Entities
 {
