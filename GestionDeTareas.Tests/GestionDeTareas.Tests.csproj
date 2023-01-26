@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GestionDeTareas.API\GestionDeTareas.UI.csproj" />
+    <ProjectReference Include="..\GestionDeTareas.Core\GestionDeTareas.Core.csproj" />
   </ItemGroup>
 
 </Project>

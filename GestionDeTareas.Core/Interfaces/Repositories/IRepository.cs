@@ -7,7 +7,7 @@ namespace GestionDeTareas.API.Repositories.Interfaces
     {
         Task<IEnumerable<T>> GetAllAsync(bool listEntity);
 
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] include);
+        //Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] include);
 
         Task<T> GetByIdAsync(int id);
 
@@ -24,11 +24,11 @@ namespace GestionDeTareas.API.Repositories.Interfaces
 
         Task<int> Count();
 
-        Task<ICollection<T>> FindAllAsync(
-             Expression<Func<T, bool>> filter = null,
-             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-             IList<Expression<Func<T, object>>> includes = null,
-             int? page = null,
-             int? pageSize = null);
+        //Task<ICollection<T>> FindAllAsync(
+        //     Expression<Func<T, bool>> filter = null,
+        //     Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        //     IList<Expression<Func<T, object>>> includes = null,
+        //     int? page = null,
+        //     int? pageSize = null);
     }
 }

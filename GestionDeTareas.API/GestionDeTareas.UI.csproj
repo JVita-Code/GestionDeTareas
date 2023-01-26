@@ -26,7 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\" />
+    <ProjectReference Include="..\GestionDeTareas.Core\GestionDeTareas.Core.csproj" />
+    <ProjectReference Include="..\GestionDeTareas.Infrastructure\GestionDeTareas.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,8 @@
-﻿using GestionDeTareas.API.Core.Helper;
-using GestionDeTareas.API.DataAccess;
-using GestionDeTareas.API.Entities;
+﻿using GestionDeTareas.API.Entities;
 using GestionDeTareas.API.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using GestionDeTareas.API.DataAccess;
 
 namespace GestionDeTareas.API.Repositories
 {
@@ -23,15 +22,15 @@ namespace GestionDeTareas.API.Repositories
             return await _entities.Where(e => e.IsDeleted == (listEntity ? false : true)).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate, params System.Linq.Expressions.Expression<Func<T, object>>[] include)
-        {
-            if (predicate == null)
-            {
-                return await _entities.IncludeMultiple(include).ToListAsync();
-            }
+        //public async Task<IEnumerable<T>> GetAllAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate, params System.Linq.Expressions.Expression<Func<T, object>>[] include)
+        //{
+        //    if (predicate == null)
+        //    {
+        //        return await _entities.IncludeMultiple(include).ToListAsync();
+        //    }
 
-            return await _entities.Where(predicate).IncludeMultiple(include).ToListAsync();
-        }
+        //    return await _entities.Where(predicate).IncludeMultiple(include).ToListAsync();
+        //}
 
         public async Task<T> GetByIdAsync(int id)
         {

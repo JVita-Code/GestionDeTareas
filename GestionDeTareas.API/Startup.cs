@@ -2,17 +2,15 @@
 using GestionDeTareas.API.Core.Interfaces;
 using GestionDeTareas.API.Core.Mapper;
 using GestionDeTareas.API.DataAccess;
-using GestionDeTareas.API.Repositories.Interfaces;
 using GestionDeTareas.API.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Microsoft.AspNetCore.Identity;
+using GestionDeTareas.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using System.Text;
 
 namespace GestionDeTareas.API
 {

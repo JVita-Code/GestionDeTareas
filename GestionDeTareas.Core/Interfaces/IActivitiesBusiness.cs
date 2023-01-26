@@ -1,6 +1,5 @@
 ﻿using GestionDeTareas.API.Core.Models;
 using GestionDeTareas.API.Core.Models.DTOs.Activity;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GestionDeTareas.API.Core.Interfaces
 {
